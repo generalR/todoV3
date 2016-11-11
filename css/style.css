@@ -1,0 +1,52 @@
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+input {
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 10px;
+}
+button {
+  width: 50px;
+  height: 50px;
+  top: 15px;
+  right: 15px;
+  z-index: 2;
+  border-radius: 25px;
+  background: pink;
+  box-shadow: none;
+  outline: none;
+  border: none;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+
+}
+ul{
+  list-style-type: none;
+  float: left;
+  text-align: right;
+  margin-top: 70px;
+}
+li{
+    padding-bottom: 10px;
+}
+#wrapper {
+
+}
+#todoListMoudule{
+  width: 480px;
+  padding: 15px;
+  top: 0;
+  z-index: 5;
+  background: #25b99a;
+  box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  margin: 0 auto;
+}
