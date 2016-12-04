@@ -41,14 +41,21 @@ var TodoList = {
       },
       cacheDom: function() {
               this.$el = $('#todoListMoudule');
-              this.$button = this.$el.find('#addTodoButton');
-              this.$input = this.$el.find('input');
-              this.$ul = this.$el.find('ul');
               this.template = this.$el.find('#todoList-template').html();
+              this.$button = this.$el.find('#addTodoButton');
+              this.$input = this.$el.find('#addTodoInput');
+              this.$toggleAll = this.$el.find('#toggle-all');
+              this.$ul = this.$el.find('ul');
+
       },
       bindEvents: function() {
               this.$button.on('click', this.createTodo.bind(this));
-              this.$ul.delegate('i.del', 'click', TodoList.deleteTodo.bind(this));
+              this.$ul.delegate('div.del', 'click', TodoList.deleteTodo.bind(this));
+              this.$toggleAll.on('change', this.toggleAll.bind(this));
+              this.$ul.on('change', '.toggle', this.toggle.bind(this));
+              this.$ul.on('dblclick', 'label', this.edit.bind(this));
+              //this.$ul.delegate('.edit', 'focusout', this.changeTodo.bind(this));
+              this.$ul.on('focusout', '.edit', this.changeTodo.bind(this));
       },
       render: function() {
              var data = {
@@ -57,37 +64,148 @@ var TodoList = {
              var compileTemplate = Handlebars.compile(this.template);
              this.$ul.html(compileTemplate(data));
       },
-      indexFromEl: function(e){
-        // accepts an element from inside the `.todoListMoudule` div and
-		      // returns the corresponding index in the `todos` array
-        this.todos.forEach(function(todo, position){
-          /*if(todo.id ===){
-            console.log(todo.id);
-          } */
-        });
-          //todoLi.id = position;
-          //console.log(todo);
-        //});
-        //var id = this.$el.closest('li').data('id');
-        //console.log(id);
+      indexFromEl: function(el){
+
+        // inkommande parameter är ett element ifrån #todoListMoudule div och
+		      // returnerar motsvarande index i 'todos' arrayen
+          var id = $(el).closest('li').data('id');
+          var todos = this.todos;
+          var i = todos.length;
+
+          //while (i--) returnerar true sålänge i > 0
+          while (i--) {
+            //jämför detta index med det genererade
+            if (todos[i].id === id) {
+              return i;
+            }
+          }
       },
       deleteTodo: function(event) {
-        var $remove = $(event.target).closest('li');
-        //jämför detta index med det genererade
-        var i = this.$ul.find('li').index($remove);
-
+        var correspondingIndex = this.indexFromEl(event.target);
+        var i = this.$ul.find('li').index(correspondingIndex);
         this.todos.splice(i, 1);
         this.render();
     },
-    createTodo: function(e){
-      //this.todos.push(this.$input.val());
-      //vill sätta ett id på varje todo
-      var addTodoTextInput = this.$input.val();
-      this.storeTodo(addTodoTextInput);
+    createTodo: function(event){
+      var addTodoTextInput = this.$input.val().trim();
+      if(addTodoTextInput === "" || null){
+
+      }else{
+        this.storeTodo(addTodoTextInput);
+        this.render();
+        this.$input.val("");
+      }
+    },
+    edit: function(event){
+
+      var $input = $(event.target).closest('li');
+      $input.addClass('edit');
+      if($input.index() % 2) {
+
+
+        $input.focus();
+      }
+
+
+
+      /*
+      $('.tab-panels .tabs li.active').removeClass('active');
+      $(this).addClass('active');
+
+      var correspondingIndex = this.indexFromEl(event.target);
+      $(event.target).closest('li').find('label').addClass('noEdit');
+       $(event.target).closest('li').removeClass('noEdit');
+      var $input = $(event.target).closest('li').addClass('edit');//.find('.edit');
+      console.log($input);
+
+      console.log( event.target.nodeName );
+      //$('.edit').css( "display", "block");
+
+    //  $input.addClass('edit');
+
+      //$input.removeClass('.noEdit');
+
+      //$input.val($input.val()).focus();
+      */
+
+      /*
+      $('.tab-panels .tabs li.active').removeClass('active');
+      $(this).addClass('active');
+
+      var correspondingIndex = this.indexFromEl(event.target);
+      $(event.target).closest('li').find('label').addClass('noEdit');
+       $(event.target).closest('li').removeClass('noEdit');
+      var $input = $(event.target).closest('li').addClass('edit');//.find('.edit');
+      console.log($input);
+
+      console.log( event.target.nodeName );
+      //$('.edit').css( "display", "block");
+
+    //  $input.addClass('edit');
+
+      //$input.removeClass('.noEdit');
+
+      //$input.val($input.val()).focus();
+      */
+    },
+    changeTodo:function(event){
+      var $input = $(event.target).closest('li');
+
+
+      //$input.removeClass('editing');
+    //hämta texten från li
+    //hämta correspondingIndex
+    //this.todos[corr     espondingIndex].todoText = "texten från li"
+    var el = event.target;
+    var $el = $(el);
+    var val = $el.val().trim();
+    //var text = $liTarget.contentEditable = "true";
+    //$('.noEdit').show();
+
+    var correspondingIndex = this.indexFromEl(event.target);
+    //var i = this.$ul.find('li').index(correspondingIndex);
+
+
+    this.todos[correspondingIndex].todoText = val;
+
+     val ="";
+
+    this.render();
+    $input.removeClass('edit');
+
+    },
+    //ta in event och kör ->this.indexFromEl(event.target);
+    toggle: function(event){
+    var index = this.indexFromEl(event.target);
+    var todo = this.todos[index];
+       if(todo.completed === false){
+         todo.completed = !todo.completed;
+         this.render();
+    }else if(todo.completed === true){
+      todo.completed = !todo.completed;
       this.render();
-      this.indexFromEl();
-      this.$input.val("");
     }
+  },
+  toggleAll: function(){
+    var totalTodos = this.todos.length;
+    var completedTodos = 0;
+//Loopa ingeom för att kolla varje todos completed property
+    this.todos.forEach(function(todo) {
+      //console.log(todos[i].completed);
+        if(todo.completed === true){
+          completedTodos++;
+          console.log(completedTodos);
+        }
+      });
+      this.todos.forEach(function(todo) {
+        if(totalTodos === completedTodos){
+          todo.completed = false;
+      }else{
+        todo.completed = true;
+      }
+    });
+    this.render();
+  }
 };
 
 var id = {
@@ -96,10 +214,6 @@ var id = {
     return id;
   }
 };
-
-
-
-
 
 //hämta först upp inputen i handlers -> skicka till todoList.addTodo
 var handlers = {
@@ -116,7 +230,6 @@ var handlers = {
     this.$input.val('');
   }
 };
-
 
 App.init();
 

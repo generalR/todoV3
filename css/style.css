@@ -1,52 +1,147 @@
 body {
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+      font-family: 'Open Sans', sans-serif;
+			background: #83a4d4; /* fallback for old browsers */
+			background: -webkit-linear-gradient(to left, #83a4d4 , #b6fbff); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to left, #83a4d4 , #b6fbff); /*     W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-input {
-    border: 1px solid #999;
-    border-radius: 4px;
-    padding: 10px;
+h1 {
+			background: #2980b9;
+			color: white;
+			margin: 0;
+			padding: 10px 28px;
+			text-transform: uppercase;
+			font-size: 24px;
+			font-weight: normal;
+      min-height: 30px;
+      text-indent: 20px;
+		}
+		#wrapper{
+			width: 90%;
+      min-width: 360px;
+      max-width: 680px;
+			background: #f7f7f7;
+			box-shadow: 0 0 3px rgba(0,0,0, 0.1);
+      margin: 100px auto;
+		}
+    #todoListMoudule{
+      min-width: 360px;
+			background: #f7f7f7;
+			box-shadow: 0 0 3px rgba(0,0,0, 0.1);
+    }
+		.strike {
+			text-decoration: line-through;
+			color: gray;
+		}
+		ul {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		li {
+      background: white;
+      width: 100%;
+      min-height: 50px;
+      /*float: left;*/
+      color: #444;
+      line-height: 50px;
+      position: relative;
+      text-indent: 7px;
+		}
+		li:nth-child(2n) {
+			background: #f7f7f7;
+		}
+	#slideInDeleteButton{
+      position: absolute;
+			background: #e74c3c;
+			height: 50px;
+			text-align: center;
+			color: white;
+			width: 0;
+			transition: 0.2s linear;
+			opacity: 0;
+      right:0px
+		}
+
+    li:hover #slideInDeleteButton {
+			width: 50px;
+			opacity: 1;
+		}
+		#addTodoInput{
+      font-size: 18px;
+			background: #f7f7f7;
+			padding:13px 13px 13px 20px;
+			box-sizing: border-box;
+			border: none;
+      text-indent: 30px;
+      width: 100%;
+    }
+.del{
+      background: none;
+      border: none;
+      width: 100%;
+      height: 100%;
+  }
+  header{
+    position: relative;
+  }
+  #toggle-all {
+      text-align: center;
+      border: none;
+
+      position: absolute;
+      left: -8px;
+      top: 13px;
+
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  #toggle-all:before {
+    content: '❯';
+    font-size: 20px;
+    color: #e6e6e6;
+    padding: 10px 27px 10px 27px;
 }
-button {
+input.toggle {
+    margin-left: 11px;
+    margin-right: 15px;
+}
+.buttonWrapper{
+  position: relative;
+}
+#addTodoButton{
+  position: absolute;
+  border:none;
   width: 50px;
-  height: 50px;
-  top: 15px;
-  right: 15px;
-  z-index: 2;
-  border-radius: 25px;
-  background: pink;
-  box-shadow: none;
-  outline: none;
-  border: none;
-
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  appearance: none;
+  height: 47px;
+  right: 0;
+  top: -47px;
 
 }
-ul{
-  list-style-type: none;
-  float: left;
-  text-align: right;
-  margin-top: 70px;
-}
-li{
-    padding-bottom: 10px;
-}
-#wrapper {
 
-}
-#todoListMoudule{
-  width: 480px;
-  padding: 15px;
+#addTodoButton i{
+  right: 0;
   top: 0;
-  z-index: 5;
-  background: #25b99a;
-  box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  margin: 0 auto;
+
+}
+button:focus {outline:0 !important;}
+input: focus {outline:0;}
+input:active {
+outline: none;
+border: none;
+}
+li input.noEdit{
+  display: none;
+  background-color: none;
+  border: none;
+  outline: none;
+  border-color: rgba("255, 0, 0, .5");
+}
+/*När li har class edit = display: none;*/
+li.edit label{
+  display: none;
+}
+li.edit .noEdit{
+  display: initial;
 }
