@@ -1,28 +1,4 @@
-/*-----krav
-blur 247
-change 282
-click 260
-dbclick 246, 276
-focus 246, 272
-focus in 274
-focus out 274
-haschange 286 426
-keyup - 280
-
-Event bubbeling - 260
-delegation 266, 330
-
-//spara till localStorage
-//Chainga anrop
-
-/*    init: function() {
-        this.cacheDom();
-        this.bindEvents();
-        this.render();
-    },*/
-
 var App = {
-  //addTodo, deleteTodo
   init: function() {
       TodoList.cacheDom();
       TodoList.bindEvents();
@@ -105,73 +81,17 @@ var TodoList = {
 
         $input.focus();
       }
-
-
-
-      /*
-      $('.tab-panels .tabs li.active').removeClass('active');
-      $(this).addClass('active');
-
-      var correspondingIndex = this.indexFromEl(event.target);
-      $(event.target).closest('li').find('label').addClass('noEdit');
-       $(event.target).closest('li').removeClass('noEdit');
-      var $input = $(event.target).closest('li').addClass('edit');//.find('.edit');
-      console.log($input);
-
-      console.log( event.target.nodeName );
-      //$('.edit').css( "display", "block");
-
-    //  $input.addClass('edit');
-
-      //$input.removeClass('.noEdit');
-
-      //$input.val($input.val()).focus();
-      */
-
-      /*
-      $('.tab-panels .tabs li.active').removeClass('active');
-      $(this).addClass('active');
-
-      var correspondingIndex = this.indexFromEl(event.target);
-      $(event.target).closest('li').find('label').addClass('noEdit');
-       $(event.target).closest('li').removeClass('noEdit');
-      var $input = $(event.target).closest('li').addClass('edit');//.find('.edit');
-      console.log($input);
-
-      console.log( event.target.nodeName );
-      //$('.edit').css( "display", "block");
-
-    //  $input.addClass('edit');
-
-      //$input.removeClass('.noEdit');
-
-      //$input.val($input.val()).focus();
-      */
     },
     changeTodo:function(event){
       var $input = $(event.target).closest('li');
-
-
-      //$input.removeClass('editing');
-    //hämta texten från li
-    //hämta correspondingIndex
-    //this.todos[corr     espondingIndex].todoText = "texten från li"
-    var el = event.target;
-    var $el = $(el);
-    var val = $el.val().trim();
-    //var text = $liTarget.contentEditable = "true";
-    //$('.noEdit').show();
-
-    var correspondingIndex = this.indexFromEl(event.target);
-    //var i = this.$ul.find('li').index(correspondingIndex);
-
-
-    this.todos[correspondingIndex].todoText = val;
-
-     val ="";
-
-    this.render();
-    $input.removeClass('edit');
+      var el = event.target;
+      var $el = $(el);
+      var val = $el.val().trim();
+      var correspondingIndex = this.indexFromEl(event.target);
+      this.todos[correspondingIndex].todoText = val;
+      val ="";
+      this.render();
+      $input.removeClass('edit');
 
     },
     //ta in event och kör ->this.indexFromEl(event.target);
@@ -232,152 +152,3 @@ var handlers = {
 };
 
 App.init();
-
-/*
-var todoList = {
-  todos: [],
-addTodo: function (todoText){
-    this.todos.push({
-      todoText: todoText,
-      completed: false,
-    });
-  },
-changeTodo: function(position, todoText){
-    view.todos[position].todoText = todoText;
-    view.displayTodos();
-  },
-  deleteTodo: function(position){
-    this.todos.splice(position, 1);
-    view.displayTodos();
-  },
-  toggleCompleted: function(position){
-    //! takes the opposit of what comes after it
-
-    //sparar en ref till den specifika todo vi är intresserade av
-    var todo = this.todos[position];
-    //tänk så här: 1 På vänster sida hämtar vi todo.completed.
-    // 2. Sätt samma värde på höger sida: todo.completed = todo.completed.
-    // 3. sätt bang-operator framför på höger sida för att flippa värdet !todo.completed.
-    todo.completed = !todo.completed;
-    view.displayTodos();
-  },
-  toggleAll: function(){
-*/
-
-
-/*------------------------------------------------*/
-    //Loopa ingeom för att kolla varje todos completed property
-/*
-    var totalTodos = this.todos.length;
-    var completedTodos = 0;
-
-    for(var i = 0; i < totalTodos; i++ ){
-      if(this.todos[i].completed === true){
-      completedTodos++;
-      }
-    }
-*/
-
-
-/*--------------------------------------------------*/
-
-    /*if everthing is true -> make everthing fasle*/
-/*
-    if(completedTodos === totalTodos){
-      for(var i = 0; i < totalTodos; i++){
-        this.todos[i].completed = false;
-      }
-    }else{
-      //if everthing is false -> make everthing true
-        for(var i = 0; i < totalTodos; i++){
-          this.todos[i].completed = true;
-        }
-    }
-    this.displayTodos();
-  }
-};
-*/
-/*
-$('#todoList')
-      .on('change', '.toggle', this.toggle.bind(this))
-      .on('dblclick', 'label', this.edit.bind(this))
-      .on('keyup', '.edit', this.editKeyup.bind(this))
-      .on('focusout', '.edit', this.update.bind(this))
-      .on('click', '.destroy', this.destroy.bind(this));
-//$('#addTodoButton').on('click', handlers.addTodo.bind(this));
-//	$('#addTodoButton').on('keyup', handlers.addTodo.bind(this));
-$('#addTodoButton').on('click', function(){
-  handlers.addTodo.call(this);
-  //handlers.addTodo.bind(this);
-});
-$('#todoList').on('click', 'button', function(e){
-  //console.log(this);
-  handlers.deleteTodo.call(this);
-});
-$('#deleteButton').on('click', function(){
-
-  //handlers.addTodo.bind(this);
-});
-*/
-/*
-var handlers = {
-  addTodo: function(event){
-  var addTodoTextInput = $("#addTodoTextInput").val();
-    todoList.addTodo(addTodoTextInput);
-    $("#addTodoTextInput").val("");
-    view.displayTodos();
-  },
-  deleteTodo: function(e){
-      var target = $( event.target );
-      console.log(target);
-      var ul = $("ul").closest("li");
-      //console.log(ul);
-      //view.displayTodos();
-    },
-    edit: function() {
-
-    }
-};
-
-var view = {
-  displayTodos: function(){
-    $( "#todoList" ).empty();
-    todoUl = $("#todoList");
-
-    todoList.todos.forEach(function(todo, position){
-      var todoLi = document.createElement("li");
-      //var todoLi = $('<li></li>');
-      todoLi.id = position;
-
-
-      todoLi.append(todo.todoText);
-      //console.log(this.createDeleteButton() );
-        var deleteButton = $('<button id=deleteButton>Delete</button>');
-      deleteButton.appendTo(todoLi);
-
-      console.log(todoLi);
-      todoUl.append(todoLi);
-
-    },this);
-
-    //console.log(todoList.todos);
-    if(todoList.todos.length === 0){
-      console.log("The TodoList is empty: ");
-    }else{
-      console.log("Todos:");
-    }
-
-    todoList.todos.forEach(function(todo){
-      if(todo.completed === true){
-          console.log("(x)", todo.todoText);
-      }else{
-        console.log("()", todo.todoText);
-      }
-    });
-  },
-  createDeleteButton: function(){
-      var deleteButton = $('<button id=deleteButton>Delete</button>');
-      return deleteButton;
-    }
-};
-*/
